@@ -24,7 +24,7 @@ class Robot:
 
         self.brain = Brain(self, grid)
 
-        self.__image = pygame.transform.scale(pygame.image.load("entities/assets/left-arrow.png"),
+        self.__image = pygame.transform.scale(pygame.image.load("entities/assets/car2.png"),
                                               (settings.ROBOT_LENGTH / 2, settings.ROBOT_LENGTH / 2))
 
         self.path_hist = []  # Stores the history of the path taken by the robot.
@@ -77,7 +77,7 @@ class Robot:
         prev = self._start_copy.xy_pygame()
         for obs in self.brain.simple_hamiltonian:
             target = obs.get_robot_target_pos().xy_pygame()
-            pygame.draw.line(screen, colors.DARK_GREEN, prev, target)
+            pygame.draw.line(screen, colors.DARK_GREEN, prev, target,3)
             prev = target
 
     def draw_self(self, screen):
@@ -89,7 +89,7 @@ class Robot:
 
     def draw_historic_path(self, screen):
         for dot in self.path_hist:
-            pygame.draw.circle(screen, colors.BLACK, dot, 3)
+            pygame.draw.circle(screen, colors.GREEN, dot, 2)
 
     def draw(self, screen):
         # Draw the robot itself.

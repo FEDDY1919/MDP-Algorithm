@@ -82,13 +82,13 @@ class Grid:
         Draw the arena borders.
         """
         # Draw upper border
-        pygame.draw.line(screen, colors.RED, (0, 0), (settings.GRID_LENGTH, 0))
+        pygame.draw.line(screen, colors.BLACK, (0, 0), (settings.GRID_LENGTH, 0))
         # Draw lower border
-        pygame.draw.line(screen, colors.RED, (0, settings.GRID_LENGTH), (settings.GRID_LENGTH, settings.GRID_LENGTH))
+        pygame.draw.line(screen, colors.BLACK, (0, settings.GRID_LENGTH), (settings.GRID_LENGTH, settings.GRID_LENGTH))
         # Draw left border
-        pygame.draw.line(screen, colors.RED, (0, 0), (0, settings.GRID_LENGTH))
+        pygame.draw.line(screen, colors.BLACK, (0, 0), (0, settings.GRID_LENGTH))
         # Draw right border
-        pygame.draw.line(screen, colors.RED, (settings.GRID_LENGTH, 0), (settings.GRID_LENGTH, settings.GRID_LENGTH))
+        pygame.draw.line(screen, colors.BLACK, (settings.GRID_LENGTH, 0), (settings.GRID_LENGTH, settings.GRID_LENGTH))
 
     def draw_obstacles(self, screen):
         for ob in self.obstacles:

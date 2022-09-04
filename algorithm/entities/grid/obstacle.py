@@ -88,7 +88,7 @@ class Obstacle:
         # Get the coordinates of the grid's bottom left-hand corner.
         rect = pygame.Rect(0, 0, settings.OBSTACLE_LENGTH, settings.OBSTACLE_LENGTH)
         rect.center = self.pos.xy_pygame()
-        pygame.draw.rect(screen, colors.BLACK, rect)
+        pygame.draw.rect(screen, colors.RED, rect)
 
         # Draw the direction of the picture
         rect.width = settings.OBSTACLE_LENGTH / 2
@@ -105,20 +105,20 @@ class Obstacle:
             rect.centerx += settings.OBSTACLE_LENGTH / 4
 
         # Draw the picture place
-        pygame.draw.rect(screen, colors.RED, rect)
+        pygame.draw.rect(screen, colors.GREEN, rect)
 
     def draw_virtual_boundary(self, screen):
         # Get the boundary points
         points = self.get_boundary_points()
 
         # Draw left border
-        pygame.draw.line(screen, colors.BLUE, points[0].xy_pygame(), points[2].xy_pygame())
+        pygame.draw.line(screen, colors.RED, points[0].xy_pygame(), points[2].xy_pygame())
         # Draw right border
-        pygame.draw.line(screen, colors.BLUE, points[1].xy_pygame(), points[3].xy_pygame())
+        pygame.draw.line(screen, colors.RED, points[1].xy_pygame(), points[3].xy_pygame())
         # Draw upper border
-        pygame.draw.line(screen, colors.BLUE, points[2].xy_pygame(), points[3].xy_pygame())
+        pygame.draw.line(screen, colors.RED, points[2].xy_pygame(), points[3].xy_pygame())
         # Draw lower border
-        pygame.draw.line(screen, colors.BLUE, points[0].xy_pygame(), points[1].xy_pygame())
+        pygame.draw.line(screen, colors.RED, points[0].xy_pygame(), points[1].xy_pygame())
 
     def draw_robot_target(self, screen):
         target = self.get_robot_target_pos()
