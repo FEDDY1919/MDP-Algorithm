@@ -35,8 +35,8 @@ class TurnCommand(Command):
 
     def apply_on_pos(self, curr_pos: Position):
         """
-        x_new = x + R(sin(∆θ + θ) − sin θ)
-        y_new = y − R(cos(∆θ + θ) − cos θ)
+        x_new = x + R(sin(∆θ + θ) - sin θ)
+        y_new = y - R(cos(∆θ + θ) - cos θ)
         θ_new = θ + ∆θ
         R is the turning radius.
 
