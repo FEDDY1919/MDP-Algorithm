@@ -8,12 +8,15 @@ from entities.assets import colors
 from entities.grid.grid import Grid
 from entities.grid.obstacle import Obstacle
 from entities.robot.robot import Robot
-
+from entities.assets.direction import Direction
 
 class AlgoApp(ABC):
     def __init__(self, obstacles: List[Obstacle]):
+        self.obstacles = obstacles
         self.grid = Grid(obstacles)
         self.robot = Robot(self.grid)
+        self.index = 0
+        self.direction = None
 
     @abstractmethod
     def init(self):
@@ -41,22 +44,11 @@ class AlgoSimulator(AlgoApp):
         """
         pygame.init()
         self.running = True
-
+        
         self.screen = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF |pygame.SCALED|pygame.NOFRAME)
         self.clock = pygame.time.Clock()
-
-        # Inform user that it is finding path...
-        pygame.display.set_caption("Calculating path...")
-        font = pygame.font.SysFont("arial", 35)
-        text = font.render("Calculating path...", True, colors.WHITE)
-        text_rect = text.get_rect()
-        text_rect.center = settings.WINDOW_SIZE[0] / 2, settings.WINDOW_SIZE[1] / 2
-        self.screen.blit(text, text_rect)
-        pygame.display.flip()
-
-        # Calculate the path.
-        self.robot.brain.plan_path()
-        pygame.display.set_caption("Simulating path!")  # Update the caption once done.
+        self.execute()
+       
 
     def settle_events(self):
         """
@@ -66,6 +58,46 @@ class AlgoSimulator(AlgoApp):
             # On quit, stop the game loop. This will stop the app.
             if event.type == pygame.QUIT:
                 self.running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                x = pos[0] // settings.GRID_CELL_LENGTH * 10 + 5
+                y = abs(pos[1] // settings.GRID_CELL_LENGTH - 19) * 10 + 5
+                print("Click ", pos, "Grid coordinates: ", x, y)
+                obstacle = [x,y,self.direction.value,self.index]
+                self.index += 1
+                self.obstacles.append(obstacle)
+                obs = self.parse_obstacle_data(self.obstacles)
+                self.grid = Grid(obs)
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN:
+                    self.direction = Direction.BOTTOM
+                    print(self.direction)
+                elif event.key == pygame.K_UP:
+                    self.direction = Direction.TOP
+                    print(self.direction)
+                elif event.key == pygame.K_LEFT:
+                    self.direction = Direction.LEFT
+                    print(self.direction)
+                elif event.key == pygame.K_RIGHT:
+                    self.direction = Direction.RIGHT
+                    print(self.direction)
+                elif event.key == pygame.K_SPACE:
+                    # Inform user that it is finding path...
+                    pygame.display.set_caption("Calculating path...")
+                    font = pygame.font.SysFont("arial", 35)
+                    text = font.render("Calculating path...", True, colors.WHITE)
+                    text_rect = text.get_rect()
+                    text_rect.center = settings.WINDOW_SIZE[0] / 2, settings.WINDOW_SIZE[1] / 2
+                    self.screen.blit(text, text_rect)
+                    pygame.display.flip()
+                    self.robot = Robot(self.grid)
+                    # Calculate the path.
+                    self.robot.brain.plan_path()
+                    pygame.display.set_caption("Simulating path!")  # Update the caption once done.
+                
+          
+            
+
 
     def do_updates(self):
         self.robot.update()
@@ -96,6 +128,16 @@ class AlgoSimulator(AlgoApp):
             self.render()
 
             self.clock.tick(settings.FRAMES)
+
+    def parse_obstacle_data(self,data):
+        obs = []
+        for obstacle_params in data:
+            obs.append(Obstacle(obstacle_params[0],
+                                obstacle_params[1],
+                                Direction(obstacle_params[2]),
+                                obstacle_params[3]))
+        # [[x, y, orient, index], [x, y, orient, index]]
+        return obs
 
 
 class AlgoMinimal(AlgoApp):

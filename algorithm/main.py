@@ -10,26 +10,16 @@ from entities.connection.rpi_server import RPiServer
 from entities.grid.obstacle import Obstacle
 
 
-def parse_obstacle_data(data) -> List[Obstacle]:
-    obs = []
-    for obstacle_params in data:
-        obs.append(Obstacle(obstacle_params[0],
-                            obstacle_params[1],
-                            Direction(obstacle_params[2]),
-                            obstacle_params[3]))
-    # [[x, y, orient, index], [x, y, orient, index]]
-    return obs
-
 
 def run_simulator():
     # Fill in obstacle positions with respect to lower bottom left corner.
     # (x-coordinate, y-coordinate, Direction)
-    obstacles = [[105, 75, 180, 0], [135, 25, 0, 1], [195, 95, 180, 2], [175, 185, -90, 3], [75, 125, 90, 4], [15, 185, -90, 5]]
+    obstacles = []
     #
-    obs = parse_obstacle_data(obstacles)
-    app = AlgoSimulator(obs)
+    #[[105, 75, 180, 0], [135, 25, 0, 1], [195, 95, 180, 2], [175, 185, -90, 3], [75, 125, 90, 4], [15, 185, -90, 5]]
+    app = AlgoSimulator(obstacles)
     app.init()
-    app.execute()
+ 
 
 
 def run_minimal(also_run_simulator):
