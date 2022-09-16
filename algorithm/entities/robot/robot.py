@@ -124,6 +124,7 @@ class Robot:
         # The next time this method is run, then we will process the next command in the list.
         if command.ticks <= 0:
             print(f"Finished processing {command}, {self.pos}")
+            print(f"Computer Command {command.convert_to_message()}")
             self.__current_command += 1
             if self.__current_command == len(self.brain.commands) and not self.printed:
                 total_time = 0
