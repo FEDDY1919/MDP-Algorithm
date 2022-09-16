@@ -16,7 +16,7 @@ class AlgoApp(ABC):
         self.grid = Grid(obstacles)
         self.robot = Robot(self.grid)
         self.index = 0
-        self.direction = None
+        self.direction = Direction.LEFT
 
     @abstractmethod
     def init(self):
@@ -45,7 +45,7 @@ class AlgoSimulator(AlgoApp):
         pygame.init()
         self.running = True
         
-        self.screen = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF |pygame.SCALED|pygame.NOFRAME)
+        self.screen = pygame.display.set_mode(self.size, pygame.HWSURFACE | pygame.DOUBLEBUF |pygame.SCALED)
         self.clock = pygame.time.Clock()
         self.execute()
        
@@ -94,7 +94,12 @@ class AlgoSimulator(AlgoApp):
                     # Calculate the path.
                     self.robot.brain.plan_path()
                     pygame.display.set_caption("Simulating path!")  # Update the caption once done.
-                
+                elif event.key == pygame.K_ESCAPE:
+                    self.obstacles = []
+                    self.grid = Grid(self.obstacles)
+                    self.robot = Robot(self.grid)
+                    self.index = 0
+                    self.direction = Direction.LEFT
           
             
 
