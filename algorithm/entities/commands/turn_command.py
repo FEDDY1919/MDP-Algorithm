@@ -85,13 +85,13 @@ class TurnCommand(Command):
     def convert_to_message(self):
         if self.angle > 0 and not self.rev:
             # This is going forward left.
-            return "l0090"  # Note the smaller case L.
+            return "a090"  # Note the smaller case L.
         elif self.angle > 0 and self.rev:
             # This is going backward and with the wheels to the right.
-            return "R0090"
+            return "e090"
         elif self.angle < 0 and not self.rev:
             # This is going forward right.
-            return "r0090"
+            return "d090"
         else:
             # This is going backward and with the wheels to the left.
-            return "L0090"
+            return "q090"

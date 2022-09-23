@@ -53,6 +53,6 @@ class StraightCommand(Command):
         # Check if forward or backward.
         if descaled_distance < 0:
             # It is a backward command.
-            return f"b{abs(descaled_distance):04}"
+            return f"b{abs(descaled_distance):03}"
         # Else, it is a forward command.
-        return f"f{descaled_distance:04}"
+        return f"f{descaled_distance:03}"
