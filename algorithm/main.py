@@ -24,8 +24,17 @@ def parse_obstacle_data(data) -> List[Obstacle]:
 def run_simulator():
     # Fill in obstacle positions with respect to lower bottom left corner.
     # (x-coordinate, y-coordinate, Direction)
-    obstacles = [[105, 75, 180, 0], [135, 25, 0, 1], [195, 95, 180, 2], [175, 185, -90, 3], [75, 125, 90, 4], [15, 185, -90, 5]]
-    
+    obstacles = [[105, 75, 6, 0], [135, 25, 2, 1], [195, 95, 6, 2], [175, 185, 4, 3], [75, 125, 0, 4], [15, 185, 4, 5]]
+    for obstacle in obstacles:
+        if obstacle[2] == 0:
+            obstacle[2] = 90
+        elif obstacle[2] == 2:
+            obstacle[2] = 0
+        elif obstacle[2] == 4:
+            obstacle[2] = -90
+        elif obstacle[2] == 6:
+            obstacle[2] = 180
+
     
     obs = parse_obstacle_data(obstacles)
     app = AlgoSimulator(obs)
