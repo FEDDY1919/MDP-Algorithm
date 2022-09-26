@@ -21,6 +21,7 @@ class Position:
 
     __repr__ = __str__
 
+
     def xy(self):
         """
         Return the true x, y coordinates of the current Position.

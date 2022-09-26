@@ -1,9 +1,11 @@
 import pygame
 
+
 import settings
 from entities.assets import colors
 from entities.assets.direction import Direction
 from entities.grid.position import Position, RobotPosition
+
 
 
 class Obstacle:
@@ -74,13 +76,26 @@ class Obstacle:
         The object will also store the angle that the robot should face.
         """
         if self.pos.direction == Direction.TOP:
-            return RobotPosition(self.pos.x, self.pos.y + settings.OBSTACLE_SAFETY_WIDTH + settings.OBSTACLE_LENGTH, Direction.BOTTOM)
+            pos =  RobotPosition(self.pos.x, self.pos.y + settings.OBSTACLE_SAFETY_WIDTH + settings.OBSTACLE_LENGTH, Direction.BOTTOM)
         elif self.pos.direction == Direction.BOTTOM:
-            return RobotPosition(self.pos.x, self.pos.y - settings.OBSTACLE_SAFETY_WIDTH - settings.OBSTACLE_LENGTH, Direction.TOP)
+            pos = RobotPosition(self.pos.x, self.pos.y - settings.OBSTACLE_SAFETY_WIDTH - settings.OBSTACLE_LENGTH, Direction.TOP)
         elif self.pos.direction == Direction.LEFT:
-            return RobotPosition(self.pos.x - settings.OBSTACLE_SAFETY_WIDTH - settings.OBSTACLE_LENGTH, self.pos.y, Direction.RIGHT)
+            pos = RobotPosition(self.pos.x - settings.OBSTACLE_SAFETY_WIDTH - settings.OBSTACLE_LENGTH, self.pos.y, Direction.RIGHT)
         else:
-            return RobotPosition(self.pos.x + settings.OBSTACLE_SAFETY_WIDTH + settings.OBSTACLE_LENGTH, self.pos.y, Direction.LEFT)
+            pos = RobotPosition(self.pos.x + settings.OBSTACLE_SAFETY_WIDTH + settings.OBSTACLE_LENGTH, self.pos.y, Direction.LEFT)
+
+        SCALING_FACTOR = 4
+        
+        if pos.x == 5 * SCALING_FACTOR:
+            pos.x += 10 * SCALING_FACTOR
+        elif pos.x == 195 * SCALING_FACTOR:
+            pos.x -= 10 * SCALING_FACTOR
+        elif pos.y == 5 * SCALING_FACTOR:
+            pos.y += 10 * SCALING_FACTOR
+        elif pos.y == 195 * SCALING_FACTOR:
+            pos.y -= 10 * SCALING_FACTOR
+        return pos
+
 
     def draw_self(self, screen):
         # Draw the obstacle onto the grid.
