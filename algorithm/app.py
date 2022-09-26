@@ -66,6 +66,9 @@ class AlgoSimulator(AlgoApp):
             # On quit, stop the game loop. This will stop the app.
             if event.type == pygame.QUIT:
                 self.running = False
+            elif event.type == pygame.KEYDOWN: 
+                if event.key == pygame.K_ESCAPE:
+                    self.running = False
 
     def do_updates(self):
         self.robot.update()

@@ -1,5 +1,7 @@
+from pickle import FALSE
 import sys
 import time
+import ast
 from typing import List
 
 import settings
@@ -24,13 +26,23 @@ def parse_obstacle_data(data) -> List[Obstacle]:
 def run_simulator():
     # Fill in obstacle positions with respect to lower bottom left corner.
     # (x-coordinate, y-coordinate, Direction)
-    obstacles = [[105, 75, 180, 0], [135, 25, 0, 1], [195, 95, 180, 2], [175, 185, -90, 3], [75, 125, 90, 4], [15, 185, -90, 5]]
-    
+    obstacles = [[105, 75, 6, 0]]
+    for obstacle in obstacles:
+        if obstacle[2] == 0:
+            obstacle[2] = 90
+        elif obstacle[2] == 2:
+            obstacle[2] = 0
+        elif obstacle[2] == 4:
+            obstacle[2] = -90
+        elif obstacle[2] == 6:
+            obstacle[2] = 180
+
     
     obs = parse_obstacle_data(obstacles)
     app = AlgoSimulator(obs)
     app.init()
     app.execute()
+    
 
 
 def run_minimal(also_run_simulator):
@@ -47,11 +59,16 @@ def run_minimal(also_run_simulator):
         except KeyboardInterrupt:
             client.close()
             sys.exit(1)
+    
     print("Connected to RPi!\n")
-    print(client.socket.recv(1024).decode())
+    payload = client.socket.recv(1024).decode()
     print("Waiting to receive obstacle data from RPi...")
+
+
+
+    #print(obstacle_data)
     # Create a server to receive information from the RPi.
-    server = RPiServer(settings.PC_HOST, settings.PC_PORT)
+    #server = RPiServer(settings.PC_HOST, settings.PC_PORT)
     # Wait for the RPi to connect to the PC.
     # try:
     #     #server.start()
@@ -65,22 +82,25 @@ def run_minimal(also_run_simulator):
     # Create a synchronous call to wait for RPi data.
     # obstacle_data: list = server.receive_data()
     # server.close()
-    # print("Got data from RPi:")
-    # print(obstacle_data)
-    #
-    # obstacles = parse_obstacle_data(obstacle_data)
-    # if also_run_simulator:
-    #     app = AlgoSimulator(obstacles)
-    #     app.init()
-    #     app.execute()
-    # app = AlgoMinimal(obstacles)
-    # app.init()
-    # app.execute()
-    #
-    # # Send the list of commands over.
-    # print("Sending list of commands to RPi...")
-    # commands = app.robot.convert_all_commands()
-    client.send_message()
+    print("Got data from RPi:")
+    obstacle_data = ast.literal_eval(payload)
+    print(obstacle_data)
+    
+    obstacles = parse_obstacle_data(obstacle_data)
+    if also_run_simulator:
+        app = AlgoSimulator(obstacles)
+        app.init()
+        app.execute()
+    else:
+        app = AlgoMinimal(obstacles)
+        app.init()
+        app.execute()
+    # #
+    # # # Send the list of commands over.
+    print("Sending list of commands to RPi...")
+    commands = "C"+str(app.robot.convert_all_commands())
+    #commands = app.robot.convert_all_commands()
+    client.send_message(commands)
     client.close()
 
 
@@ -91,4 +111,4 @@ def run_rpi():
 
 
 if __name__ == '__main__':
-    run_simulator()
+    run_rpi()
