@@ -106,7 +106,7 @@ def run_minimal(also_run_simulator):
 
 def run_rpi():
     while True:
-        run_minimal(True)
+        run_minimal(False)
         time.sleep(5)
 
 
