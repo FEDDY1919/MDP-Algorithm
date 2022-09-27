@@ -26,7 +26,7 @@ def parse_obstacle_data(data) -> List[Obstacle]:
 def run_simulator():
     # Fill in obstacle positions with respect to lower bottom left corner.
     # (x-coordinate, y-coordinate, Direction)
-    obstacles = [[135, 25, 0, 1] ,[55, 75, -90, 2], [195, 95, 180, 3], [175, 185, -90, 4], [75, 125, 90, 5], [15, 185, -90, 6]]
+    obstacles = [[135, 25, 0, 1], [55, 75, -90, 2], [195, 95, 180, 3], [175, 185, -90, 4], [75, 125, 90, 5], [15, 185, -90, 6]]
    
 
     
@@ -56,24 +56,6 @@ def run_minimal(also_run_simulator):
     payload = client.socket.recv(1024).decode()
     print("Waiting to receive obstacle data from RPi...")
 
-
-
-    #print(obstacle_data)
-    # Create a server to receive information from the RPi.
-    #server = RPiServer(settings.PC_HOST, settings.PC_PORT)
-    # Wait for the RPi to connect to the PC.
-    # try:
-    #     #server.start()
-    # except OSError or KeyboardInterrupt as e:
-    #     print(e)
-    #     server.close()
-    #     client.close()
-    #     sys.exit(1)
-
-    # At this point, both the RPi and the PC are connected to each other.
-    # Create a synchronous call to wait for RPi data.
-    # obstacle_data: list = server.receive_data()
-    # server.close()
     print("Got data from RPi:")
     obstacle_data = ast.literal_eval(payload)
     print(obstacle_data)
@@ -98,9 +80,10 @@ def run_minimal(also_run_simulator):
 
 def run_rpi():
     while True:
-        run_minimal(False)
+        run_minimal(True)
         time.sleep(5)
 
 
 if __name__ == '__main__':
-    run_simulator()
+    run_rpi()
+    #run_simulator()

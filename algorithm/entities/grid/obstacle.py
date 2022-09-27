@@ -40,7 +40,7 @@ class Obstacle:
         """
         Checks whether a given x-y coordinate is within the safety boundary of this obstacle.
         """
-        if self.pos.x - settings.OBSTACLE_SAFETY_WIDTH < x < self.pos.x + settings.OBSTACLE_SAFETY_WIDTH and \
+        if self.pos.x - settings.OBSTACLE_SAFETY_WIDTH  < x < self.pos.x + settings.OBSTACLE_SAFETY_WIDTH and \
                 self.pos.y - settings.OBSTACLE_SAFETY_WIDTH < y < self.pos.y + settings.OBSTACLE_SAFETY_WIDTH:
             return True
         return False
@@ -51,9 +51,9 @@ class Obstacle:
 
         Useful for checking if a point is within the boundary of this obstacle.
         """
-        upper = self.pos.y + settings.OBSTACLE_SAFETY_WIDTH
-        lower = self.pos.y - settings.OBSTACLE_SAFETY_WIDTH
-        left = self.pos.x - settings.OBSTACLE_SAFETY_WIDTH
+        upper = self.pos.y + settings.OBSTACLE_SAFETY_WIDTH 
+        lower = self.pos.y - settings.OBSTACLE_SAFETY_WIDTH 
+        left = self.pos.x - settings.OBSTACLE_SAFETY_WIDTH 
         right = self.pos.x + settings.OBSTACLE_SAFETY_WIDTH
 
         return [
@@ -76,13 +76,13 @@ class Obstacle:
         The object will also store the angle that the robot should face.
         """
         if self.pos.direction == Direction.TOP:
-            pos =  RobotPosition(self.pos.x, self.pos.y + settings.OBSTACLE_SAFETY_WIDTH + settings.OBSTACLE_LENGTH, Direction.BOTTOM)
+            pos =  RobotPosition(self.pos.x, self.pos.y + settings.OBSTACLE_SAFETY_WIDTH + settings.OBSTACLE_LENGTH + 10*4, Direction.BOTTOM)
         elif self.pos.direction == Direction.BOTTOM:
-            pos = RobotPosition(self.pos.x, self.pos.y - settings.OBSTACLE_SAFETY_WIDTH - settings.OBSTACLE_LENGTH, Direction.TOP)
+            pos = RobotPosition(self.pos.x, self.pos.y - settings.OBSTACLE_SAFETY_WIDTH - settings.OBSTACLE_LENGTH - 10*4, Direction.TOP)
         elif self.pos.direction == Direction.LEFT:
-            pos = RobotPosition(self.pos.x - settings.OBSTACLE_SAFETY_WIDTH - settings.OBSTACLE_LENGTH, self.pos.y, Direction.RIGHT)
+            pos = RobotPosition(self.pos.x - settings.OBSTACLE_SAFETY_WIDTH - settings.OBSTACLE_LENGTH - 10*4, self.pos.y, Direction.RIGHT)
         else:
-            pos = RobotPosition(self.pos.x + settings.OBSTACLE_SAFETY_WIDTH + settings.OBSTACLE_LENGTH, self.pos.y, Direction.LEFT)
+            pos = RobotPosition(self.pos.x + settings.OBSTACLE_SAFETY_WIDTH + settings.OBSTACLE_LENGTH + 10*4, self.pos.y, Direction.LEFT)
 
         SCALING_FACTOR = 4
         
