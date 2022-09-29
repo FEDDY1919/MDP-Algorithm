@@ -85,5 +85,5 @@ def run_rpi():
 
 
 if __name__ == '__main__':
-    run_rpi()
-    #run_simulator()
+    #run_rpi()
+    run_simulator()
