@@ -53,37 +53,38 @@ def run_minimal(also_run_simulator):
             sys.exit(1)
     
     print("Connected to RPi!\n")
-    payload = client.socket.recv(1024).decode()
-    print("Waiting to receive obstacle data from RPi...")
+    while True:
+        payload = client.socket.recv(1024).decode()
+        print("Waiting to receive obstacle data from RPi...")
 
-    print("Got data from RPi:")
-    obstacle_data = ast.literal_eval(payload)
-    print(obstacle_data)
-    
-    obstacles = parse_obstacle_data(obstacle_data)
-    if also_run_simulator:
-        app = AlgoSimulator(obstacles)
-        app.init()
-        app.execute()
-    else:
+        print("Got data from RPi:")
+        obstacle_data = ast.literal_eval(payload)
+        print(obstacle_data)
+        
+        obstacles = parse_obstacle_data(obstacle_data)
+        if also_run_simulator:
+            app = AlgoSimulator(obstacles)
+            app.init()
+            app.execute()
+        
         app = AlgoMinimal(obstacles)
         app.init()
         app.execute()
-    # #
-    # # # Send the list of commands over.
-    print("Sending list of commands to RPi...")
-    commands = "C"+str(app.robot.convert_all_commands())
-    #commands = app.robot.convert_all_commands()
-    client.send_message(commands)
-    client.close()
-
+        # #
+        # # # Send the list of commands over.
+        print("Sending list of commands to RPi...")
+        commands = "C"+str(app.robot.convert_all_commands())
+        #commands = app.robot.convert_all_commands()
+        client.send_message(commands)
+        print(commands)
+   
 
 def run_rpi():
     while True:
-        run_minimal(True)
+        run_minimal(False)
         time.sleep(5)
 
 
 if __name__ == '__main__':
-    #run_rpi()
-    run_simulator()
+    run_rpi()
+    #run_simulator()
