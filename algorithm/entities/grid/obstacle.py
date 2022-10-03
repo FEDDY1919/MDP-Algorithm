@@ -76,13 +76,13 @@ class Obstacle:
         The object will also store the angle that the robot should face.
         """
         if self.pos.direction == Direction.TOP:
-            pos =  RobotPosition(self.pos.x, self.pos.y + settings.OBSTACLE_SAFETY_WIDTH + settings.OBSTACLE_LENGTH , Direction.BOTTOM)
+            pos =  RobotPosition(self.pos.x, self.pos.y + settings.OBSTACLE_SAFETY_WIDTH + settings.OBSTACLE_LENGTH + 20, Direction.BOTTOM)
         elif self.pos.direction == Direction.BOTTOM:
-            pos = RobotPosition(self.pos.x, self.pos.y - settings.OBSTACLE_SAFETY_WIDTH - settings.OBSTACLE_LENGTH , Direction.TOP)
+            pos = RobotPosition(self.pos.x, self.pos.y - settings.OBSTACLE_SAFETY_WIDTH - settings.OBSTACLE_LENGTH - 20, Direction.TOP)
         elif self.pos.direction == Direction.LEFT:
-            pos = RobotPosition(self.pos.x - settings.OBSTACLE_SAFETY_WIDTH - settings.OBSTACLE_LENGTH , self.pos.y, Direction.RIGHT)
+            pos = RobotPosition(self.pos.x - settings.OBSTACLE_SAFETY_WIDTH - settings.OBSTACLE_LENGTH - 20, self.pos.y, Direction.RIGHT)
         else:
-            pos = RobotPosition(self.pos.x + settings.OBSTACLE_SAFETY_WIDTH + settings.OBSTACLE_LENGTH , self.pos.y, Direction.LEFT)
+            pos = RobotPosition(self.pos.x + settings.OBSTACLE_SAFETY_WIDTH + settings.OBSTACLE_LENGTH + 20, self.pos.y, Direction.LEFT)
 
         SCALING_FACTOR = 4
         
