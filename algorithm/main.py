@@ -33,6 +33,8 @@ def run_simulator():
     obs = parse_obstacle_data(obstacles)
     app = AlgoSimulator(obs)
     app.init()
+    commands = "C"+str(app.robot.convert_all_commands())
+    print(commands)
     app.execute()
     
 

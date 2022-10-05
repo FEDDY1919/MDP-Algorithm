@@ -75,10 +75,13 @@ class ModifiedAStar:
             for tick in range(command.ticks // settings.PATH_TURN_CHECK_GRANULARITY):
                 tick_command = TurnCommand(command.angle / (command.ticks // settings.PATH_TURN_CHECK_GRANULARITY),
                                            command.rev)
-                tick_command.apply_on_pos(p_c)
+                tick_command.apply_on_pos(p_c,settings.ROBOT_TURN_RADIUS)
                 if not (self.grid.check_valid_position(p_c) and self.grid.get_coordinate_node(*p_c.xy())):
                     return None, None
-        command.apply_on_pos(p)
+        if isinstance(command, TurnCommand):
+            command.apply_on_pos(p,0)
+        else:
+            command.apply_on_pos(p)
         if self.grid.check_valid_position(p) and (after := self.grid.get_coordinate_node(*p.xy())):
             after.pos.direction = p.direction
             return after.copy(), p

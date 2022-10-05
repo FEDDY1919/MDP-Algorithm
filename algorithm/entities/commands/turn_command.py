@@ -33,7 +33,7 @@ class TurnCommand(Command):
         angle = self.angle / self.total_ticks
         robot.turn(angle, self.rev)
 
-    def apply_on_pos(self, curr_pos: Position):
+    def apply_on_pos(self, curr_pos: Position,ROBOT_TURN_RADIUS):
         """
         x_new = x + R(sin(∆θ + θ) - sin θ)
         y_new = y - R(cos(∆θ + θ) - cos θ)
@@ -49,9 +49,9 @@ class TurnCommand(Command):
         assert isinstance(curr_pos, RobotPosition), print("Cannot apply turn command on non-robot positions!")
 
         # Get change in (x, y) coordinate.
-        x_change = settings.ROBOT_TURN_RADIUS * (math.sin(math.radians(curr_pos.angle + self.angle)) -
+        x_change = ROBOT_TURN_RADIUS * (math.sin(math.radians(curr_pos.angle + self.angle)) -
                                                  math.sin(math.radians(curr_pos.angle)))
-        y_change = settings.ROBOT_TURN_RADIUS * (math.cos(math.radians(curr_pos.angle + self.angle)) -
+        y_change = ROBOT_TURN_RADIUS * (math.cos(math.radians(curr_pos.angle + self.angle)) -
                                                  math.cos(math.radians(curr_pos.angle)))
 
         if self.angle < 0 and not self.rev:  # Wheels to right moving forward.
