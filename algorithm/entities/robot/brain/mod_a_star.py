@@ -79,7 +79,7 @@ class ModifiedAStar:
                 if not (self.grid.check_valid_position(p_c) and self.grid.get_coordinate_node(*p_c.xy())):
                     return None, None
         if isinstance(command, TurnCommand):
-            command.apply_on_pos(p,0)
+            command.apply_on_pos(p,settings.ACTUAL_ROBOT_TURN_RADIUS)
         else:
             command.apply_on_pos(p)
         if self.grid.check_valid_position(p) and (after := self.grid.get_coordinate_node(*p.xy())):

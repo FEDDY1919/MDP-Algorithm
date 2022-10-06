@@ -63,7 +63,7 @@ class Robot:
 
         Note that ∆θ is in radians.
         """
-        TurnCommand(d_angle, rev).apply_on_pos(self.pos,0)
+        TurnCommand(d_angle, rev).apply_on_pos(self.pos,settings.ACTUAL_ROBOT_TURN_RADIUS)
 
     def straight(self, dist):
         """
