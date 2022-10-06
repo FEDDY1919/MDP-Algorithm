@@ -69,10 +69,10 @@ class Grid:
         # Check if position too close to the border.
         # NOTE: We allow the robot to overextend the border a little!
         # We do this by setting the limit to be GRID_CELL_LENGTH rather than ROBOT_SAFETY_DISTANCE
-        if (pos.y < settings.GRID_CELL_LENGTH or
-            pos.y > settings.GRID_LENGTH - settings.GRID_CELL_LENGTH) or \
-                (pos.x < settings.GRID_CELL_LENGTH or
-                 pos.x > settings.GRID_LENGTH - settings.GRID_CELL_LENGTH):
+        if (pos.y < 0 or
+            pos.y > settings.GRID_LENGTH) or \
+                (pos.x < 0 or
+                 pos.x > settings.GRID_LENGTH):
             return False
         return True
 
