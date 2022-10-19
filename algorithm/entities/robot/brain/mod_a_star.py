@@ -36,6 +36,8 @@ class ModifiedAStar:
         # Check travel straights.
         straight_dist = 10 * settings.SCALING_FACTOR
         straight_commands = [
+            StraightCommand(straight_dist/2),
+            StraightCommand(-straight_dist/2),
             StraightCommand(straight_dist),
             StraightCommand(-straight_dist)
         ]
